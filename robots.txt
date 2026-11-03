@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nxtcraft.github.io/color-contrast/sitemap.xml

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R9EW10BJGW"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R9EW10BJGW');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Color Contrast Checker WCAG – Accessibility Contrast Ratio Tool Free</title>
+<meta name="description" content="Free WCAG color contrast checker. Test foreground/background color accessibility ratios for AA and AAA compliance. Live preview for text, UI elements and large text.">
+<link rel="canonical" href="https://nxtcraft.github.io/color-contrast/">
+<meta property="og:title" content="Color Contrast Checker — WCAG AA/AAA Accessibility">
+<meta property="og:description" content="Check color contrast ratios for WCAG 2.1 AA and AAA accessibility compliance. Free, instant, browser-based.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nxtcraft.github.io/color-contrast/">
+<link rel="manifest" href="/color-contrast/manifest.json">
+<meta name="theme-color" content="#6366f1">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Color Contrast Checker","url":"https://nxtcraft.github.io/color-contrast/","description":"WCAG 2.1 AA/AAA color contrast accessibility checker.","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f1a;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+nav{background:#1a1b2e;border-bottom:1px solid #2d2f52;height:50px;display:flex;align-items:center;padding:0 1.5rem;gap:1rem}
+.brand{font-weight:800;color:#818cf8}
+.nav-links{margin-left:auto}.nav-links a{color:#64748b;font-size:.85rem;text-decoration:none}
+main{max-width:860px;margin:0 auto;padding:1.5rem}
+h1{font-size:1.5rem;font-weight:800;margin-bottom:.3rem}
+.sub{color:#94a3b8;font-size:.9rem;margin-bottom:1.5rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+.card{background:#1e1f30;border:1px solid #2d2f52;border-radius:12px;padding:1.25rem}
+label{display:block;font-size:.82rem;font-weight:600;color:#818cf8;margin:.5rem 0 .2rem}
+input[type=color]{width:100%;height:42px;border:none;border-radius:8px;cursor:pointer;background:none;padding:2px}
+input[type=text]{width:100%;background:#0f0f1a;border:1.5px solid #2d2f52;color:#e2e8f0;border-radius:8px;padding:.45rem .7rem;font-size:.9rem;font-family:monospace;outline:none}
+input[type=text]:focus{border-color:#6366f1}
+.preview-box{border-radius:12px;padding:1.5rem;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;transition:all .2s}
+.preview-box .sample-large{font-size:1.5rem;font-weight:700;line-height:1.2}
+.preview-box .sample-small{font-size:.9rem}
+.preview-box .sample-ui{font-size:.75rem;border-radius:4px;padding:.2rem .5rem;border:1.5px solid currentColor;display:inline-block;margin-top:.3rem}
+.ratio-display{text-align:center;margin:1rem 0}
+.ratio-num{font-size:3rem;font-weight:900;font-variant-numeric:tabular-nums;color:#818cf8}
+.ratio-label{color:#94a3b8;font-size:.85rem;margin-top:.2rem}
+.badges{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-top:.75rem}
+.badge{display:flex;align-items:center;gap:.35rem;padding:.35rem .75rem;border-radius:20px;font-size:.82rem;font-weight:700}
+.badge.pass{background:#14532d;color:#4ade80}
+.badge.fail{background:#450a0a;color:#f87171}
+.table-wrap{margin-top:1rem;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th{background:#1a1b2e;color:#818cf8;padding:.5rem .75rem;text-align:left;font-weight:600}
+td{padding:.5rem .75rem;border-top:1px solid #1e1f30;color:#cbd5e1}
+.check-pass{color:#4ade80;font-weight:700}
+.check-fail{color:#f87171}
+.swatch-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem}
+.swatch{width:32px;height:32px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:transform .1s}
+.swatch:hover{transform:scale(1.1);border-color:#818cf8}
+footer{text-align:center;padding:1.5rem;color:#475569;font-size:.78rem;margin-top:2rem;border-top:1px solid #1e1f30}
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">🎨 Color Contrast</span>
+  <div class="nav-links"><a href="https://nxtcraft.github.io/">All Tools</a></div>
+</nav>
+<main>
+  <h1>Color Contrast Checker</h1>
+  <p class="sub">Check foreground/background color contrast for WCAG 2.1 AA and AAA accessibility compliance.</p>
+  <div class="grid2">
+    <div class="card">
+      <label>Foreground (Text)</label>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <input type="color" id="fg-picker" value="#ffffff" oninput="syncColor('fg')">
+        <input type="text" id="fg-hex" value="#ffffff" oninput="syncHex('fg')" maxlength="9" placeholder="#RRGGBB">
+      </div>
+      <div class="swatch-row" id="fg-swatches"></div>
+      <label style="margin-top:1rem">Background</label>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <input type="color" id="bg-picker" value="#1a1b2e" oninput="syncColor('bg')">
+        <input type="text" id="bg-hex" value="#1a1b2e" oninput="syncHex('bg')" maxlength="9" placeholder="#RRGGBB">
+      </div>
+      <div class="swatch-row" id="bg-swatches"></div>
+      <div style="margin-top:1rem;display:flex;gap:.5rem">
+        <button onclick="swap()" style="flex:1;padding:.5rem;background:#1a1b2e;border:1px solid #2d2f52;color:#818cf8;border-radius:8px;cursor:pointer;font-weight:600">⇄ Swap</button>
+        <button onclick="randomPair()" style="flex:1;padding:.5rem;background:#1a1b2e;border:1px solid #2d2f52;color:#818cf8;border-radius:8px;cursor:pointer;font-weight:600">🎲 Random</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="preview-box" id="preview">
+        <div class="sample-large" id="prev-large">Large Text (18pt / 14pt bold)</div>
+        <div class="sample-small" id="prev-small">Normal text — the quick brown fox jumps over the lazy dog.</div>
+        <div class="sample-ui" id="prev-ui">Button / UI element</div>
+      </div>
+      <div class="ratio-display">
+        <div class="ratio-num" id="ratio-num">—</div>
+        <div class="ratio-label">Contrast Ratio</div>
+      </div>
+      <div class="badges" id="badges"></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:1rem">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Level</th><th>Standard</th><th>Requirement</th><th>Result</th></tr></thead>
+        <tbody id="results-table"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<footer><p>Color Contrast Checker by <a href="https://nxtcraft.github.io/" style="color:#818cf8">NxtCraft</a></p></footer>
+
+<script>
+const FG_SWATCHES = ['#ffffff','#f1f5f9','#94a3b8','#1e293b','#0f172a','#fbbf24','#f87171','#4ade80','#60a5fa','#e879f9'];
+const BG_SWATCHES = ['#ffffff','#f8fafc','#1e293b','#0f172a','#111827','#1a1b2e','#0c0c0c','#1f2937','#fef3c7','#ecfdf5'];
+
+function buildSwatches(id, colors, which) {
+  const wrap = document.getElementById(id);
+  wrap.innerHTML = colors.map(c => `<div class="swatch" style="background:${c}" title="${c}" onclick="setColor('${which}','${c}')"></div>`).join('');
+}
+buildSwatches('fg-swatches', FG_SWATCHES, 'fg');
+buildSwatches('bg-swatches', BG_SWATCHES, 'bg');
+
+function setColor(which, hex) {
+  document.getElementById(`${which}-picker`).value = hex;
+  document.getElementById(`${which}-hex`).value = hex;
+  check();
+}
+
+function syncColor(which) {
+  const val = document.getElementById(`${which}-picker`).value;
+  document.getElementById(`${which}-hex`).value = val;
+  check();
+}
+
+function syncHex(which) {
+  const val = document.getElementById(`${which}-hex`).value.trim();
+  if (/^#[0-9a-f]{6}$/i.test(val) || /^#[0-9a-f]{8}$/i.test(val)) {
+    document.getElementById(`${which}-picker`).value = val.slice(0,7);
+    check();
+  }
+}
+
+function hexToRgb(hex) {
+  const h = hex.replace('#','');
+  if (h.length === 3) return { r: parseInt(h[0]+h[0],16), g: parseInt(h[1]+h[1],16), b: parseInt(h[2]+h[2],16) };
+  return { r: parseInt(h.slice(0,2),16), g: parseInt(h.slice(2,4),16), b: parseInt(h.slice(4,6),16) };
+}
+
+function relativeLuminance({r,g,b}) {
+  return [r,g,b].map(c => {
+    const s = c/255;
+    return s <= 0.03928 ? s/12.92 : Math.pow((s+0.055)/1.055, 2.4);
+  }).reduce((acc,v,i) => acc + v * [0.2126,0.7152,0.0722][i], 0);
+}
+
+function contrastRatio(fg, bg) {
+  const lf = relativeLuminance(hexToRgb(fg));
+  const lb = relativeLuminance(hexToRgb(bg));
+  const lighter = Math.max(lf,lb); const darker = Math.min(lf,lb);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function swap() {
+  const fg = document.getElementById('fg-hex').value;
+  const bg = document.getElementById('bg-hex').value;
+  setColor('fg', bg); setColor('bg', fg);
+}
+
+function randomPair() {
+  const pairs = [
+    ['#ffffff','#000000'],['#fbbf24','#1e1b00'],['#60a5fa','#0c1a2e'],
+    ['#4ade80','#042010'],['#f87171','#2d0000'],['#e879f9','#1a002d'],
+    ['#38bdf8','#001a2d'],['#fb923c','#1f0d00'],
+  ];
+  const [fg,bg] = pairs[Math.floor(Math.random()*pairs.length)];
+  setColor('fg',fg); setColor('bg',bg);
+}
+
+function check() {
+  const fg = document.getElementById('fg-picker').value;
+  const bg = document.getElementById('bg-picker').value;
+  const ratio = contrastRatio(fg, bg);
+  const ratioStr = ratio.toFixed(2) + ':1';
+
+  // Preview
+  const prev = document.getElementById('preview');
+  prev.style.background = bg;
+  ['prev-large','prev-small','prev-ui'].forEach(id => {
+    document.getElementById(id).style.color = fg;
+  });
+  document.getElementById('prev-ui').style.borderColor = fg;
+
+  document.getElementById('ratio-num').textContent = ratioStr;
+
+  const levels = [
+    { level:'AA',  std:'Normal text',  min:4.5,  pass: ratio >= 4.5 },
+    { level:'AA',  std:'Large text',   min:3.0,  pass: ratio >= 3.0 },
+    { level:'AA',  std:'UI components',min:3.0,  pass: ratio >= 3.0 },
+    { level:'AAA', std:'Normal text',  min:7.0,  pass: ratio >= 7.0 },
+    { level:'AAA', std:'Large text',   min:4.5,  pass: ratio >= 4.5 },
+  ];
+
+  document.getElementById('results-table').innerHTML = levels.map(l =>
+    `<tr><td><b>${l.level}</b></td><td>${l.std}</td><td>≥ ${l.min}:1</td><td class="${l.pass?'check-pass':'check-fail'}">${l.pass?'✓ Pass':'✗ Fail'}</td></tr>`
+  ).join('');
+
+  // Summary badges
+  const aaPass = ratio >= 4.5;
+  const aaLargePass = ratio >= 3.0;
+  const aaaPass = ratio >= 7.0;
+  document.getElementById('badges').innerHTML = [
+    [aaPass,'AA Normal'],
+    [aaLargePass,'AA Large'],
+    [aaaPass,'AAA Normal'],
+  ].map(([p,l]) => `<div class="badge ${p?'pass':'fail'}">${p?'✓':'✗'} ${l}</div>`).join('');
+}
+
+check();
+</script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('/color-contrast/sw.js');</script>
+</body>
+</html>
